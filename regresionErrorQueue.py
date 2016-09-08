@@ -104,36 +104,24 @@ def regression_test(inputs):
         if isinstance(num, int):
             # If it is an enqueue
             if len(checkQ) >= size:
-                try:
-                    assert not q.enqueue(num)
-                    q.checkRep()
-                    out.append((num, 0))
-                except AssertionError:
-                    out.append((num, 1))
+                assert not q.enqueue(num)
+                q.checkRep()
+                out.append((num, 0))
             else:
-                try:
-                    assert q.enqueue(num)
-                    q.checkRep()
-                    checkQ.append(num)
-                    out.append((num, 0))
-                except AssertionError:
-                    out.append((num, 1))
+                assert q.enqueue(num)
+                q.checkRep()
+                checkQ.append(num)
+                out.append((num, 0))
         else:
             # If it is a dequeue
             if len(checkQ) <= 0:
-                try:
-                    assert q.dequeue() is None
-                    q.checkRep()
-                    out.append(('dq', 0))
-                except AssertionError:
-                    out.append(('dq', 1))
+                assert q.dequeue() is None
+                q.checkRep()
+                out.append(('dq', 0))
             else:
-                try:
-                    assert q.dequeue() == checkQ.pop(0)
-                    q.checkRep()
-                    out.append(('dq', 0))
-                except AssertionError:
-                    out.append(('dq', 1))
+                assert q.dequeue() == checkQ.pop(0)
+                q.checkRep()
+                out.append(('dq', 0))
     return out
 
 inputs = errorQueueRandom.random_test()
